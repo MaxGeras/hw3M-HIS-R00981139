@@ -6,11 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,17 +30,17 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import modal.Airline;
 import modal.AirlinesDataSetReport;
-import modal.Airport;
 import modal.AirportReport;
 
 /**
+ * Generates reports and builds an XML file
  * 
  * @author Max
  *
  */
 public class AirlinesDataService {
 	private static String UTF_8 = "UTF-8";
-	private static String FILE_PATH = "C:/Users/Maksym/Desktop/airlines";
+	private static String FILE_PATH = "C:/Users/Maksym/Downloads/airlines";
 	private static List<String> XML_ELEMENTS = Collections.unmodifiableList(
 			Arrays.asList(
 					"totalNumberOfAirports", 
@@ -66,21 +66,20 @@ public class AirlinesDataService {
 	public void processAirlinesData() {
 		File file = new File(FILE_PATH);
 		try(JsonReader jsonReader = new JsonReader(new InputStreamReader(new FileInputStream(file), UTF_8))) {
-			AirlinesDataSetReport airlinesDataSetReport = new AirlinesDataSetReport();
+			AirlinesDataSetReport airlinesReport = new AirlinesDataSetReport();
 			Gson gson = new GsonBuilder().create();
 
 		    jsonReader.beginArray();
 		    // Read each record at a time
 		    while (jsonReader.hasNext()){
-		        generateAirlinesReport(gson.fromJson(jsonReader, Airline.class), airlinesDataSetReport);
+		        generateAirlinesReport(gson.fromJson(jsonReader, Airline.class), airlinesReport);
 		    }
-		    generateXMLschema(airlinesDataSetReport);
 		    
-		    System.out.println(airlinesDataSetReport.getTotalNumDueToCarrier());
-		    System.out.println(airlinesDataSetReport.getTotalNumDueToNas());
-		    System.out.println(airlinesDataSetReport.getTotalNumDueToSecurity());
-		    System.out.println(airlinesDataSetReport.getTotalNumOfFlights());
-		    System.out.println(airlinesDataSetReport.geAirportReport().size());
+		    // Sort by delays due to security
+		    sortAirportsByDelaysDueToSecurity(airlinesReport);
+		    
+		    //generate an XML file 
+		    generateXMLschema(airlinesReport);
 		}catch (UnsupportedEncodingException ex) {
 		    ex.printStackTrace();
 		} catch (FileNotFoundException ex) {
@@ -93,6 +92,7 @@ public class AirlinesDataService {
 	}
 	
 	/**
+	 * Generate airlines reports for building an XML file
 	 * 
 	 * @param airline
 	 * @param airlinesDataSetReport
@@ -155,6 +155,7 @@ public class AirlinesDataService {
 	}
 	
 	/**
+	 * Build an XML file 
 	 * 
 	 * @param airlinesReport
 	 */
@@ -163,7 +164,7 @@ public class AirlinesDataService {
 		        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 		        Document doc = docBuilder.newDocument();
-		        // students root element
+		        // airlines root element
 		        Element rootElement = doc.createElement("airlines");
 		        doc.appendChild(rootElement);
 		        
@@ -174,7 +175,8 @@ public class AirlinesDataService {
 		        
 		        // Write the content into XML file
 		        DOMSource source = new DOMSource(doc);
-		        StreamResult result = new StreamResult(new File("students-new.xml"));
+		        DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyyMMdd");
+		        StreamResult result = new StreamResult(new File("airline_stats_" + timeStampPattern.format(java.time.LocalDateTime.now()) + ".xml"));
 		        
 		        TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		        Transformer transformer = transformerFactory.newTransformer();
@@ -188,6 +190,15 @@ public class AirlinesDataService {
 		
 	}
 	
+	/**
+	 * Build XML elements of the file
+	 * 
+	 * @param xmlElement
+	 * @param rootElement
+	 * @param airlinesReport
+	 * @param doc
+	 * @param index
+	 */
 	private void buildXmlElement(final String xmlElement, Element rootElement, final AirlinesDataSetReport airlinesReport, Document doc, final int index) {
 	   Element stat = doc.createElement("stats");
 	   Element element = doc.createElement(xmlElement);
@@ -204,7 +215,7 @@ public class AirlinesDataService {
 						airlinesReport.getTotalNumOfFlights())));
 				break;
 			case "percentageOfTotalFlightsDelayedByCarrier":
-				element.setTextContent(String.valueOf(percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToSecurity(), 
+				element.setTextContent(String.valueOf(percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToCarrier(), 
 						airlinesReport.getTotalNumOfFlights())));
 				break;
 			case "percentageOfTotalFlightsDelayedByNationalAviationSystem":
@@ -212,35 +223,14 @@ public class AirlinesDataService {
 						airlinesReport.getTotalNumOfFlights())));
 				break;
 			case "airportWithTheHighestNumberOfDelaysDueToSecurity":
-				List<Map.Entry<String, AirportReport>> entryLastList = new ArrayList<Map.Entry<String, AirportReport>>( airlinesReport.geAirportReport().entrySet());
-	            Collections.sort( entryLastList, new Comparator<Map.Entry<String, AirportReport>>() {
-	                @Override
-		                public int compare(Map.Entry<String, AirportReport> obj1, Map.Entry<String, AirportReport> obj2) {
-		                    return obj1.getValue().getNumOfDelaysDueToSecurity().compareTo(obj2.getValue().getNumOfDelaysDueToSecurity());
-		                }
-		            }
-		        );
-
-				Map.Entry<String,AirportReport> lastEntry = entryLastList.get(entryLastList.size() - 1);
-				AirportReport lastReport = lastEntry.getValue();
-				element.setTextContent(String.valueOf(lastReport.getNumOfDelaysDueToSecurity()));
+				element.setTextContent(String.valueOf(airlinesReport.getHighestNumberOfDelaysDueToSecurity()));
 				break;
 			case "airportWithTheLowestNumberOfDelaysDueToSecurity":
-				List<Map.Entry<String, AirportReport>> entryFirstList = new ArrayList<Map.Entry<String, AirportReport>>( airlinesReport.geAirportReport().entrySet());
-	            Collections.sort( entryFirstList, new Comparator<Map.Entry<String, AirportReport>>() {
-	                @Override
-		                public int compare(Map.Entry<String, AirportReport> obj1, Map.Entry<String, AirportReport> obj2) {
-		                    return obj1.getValue().getNumOfDelaysDueToSecurity().compareTo(obj2.getValue().getNumOfDelaysDueToSecurity());
-		                }
-		            }
-		        );
 
-				Map.Entry<String,AirportReport> firstEntry = entryFirstList.get(0);
-				AirportReport secReport = firstEntry.getValue();
-				element.setTextContent(String.valueOf(secReport.getNumOfDelaysDueToSecurity()));
+				element.setTextContent(String.valueOf(airlinesReport.getLowestNumberOfDelaysDueToSecurity()));
 				break;
 			case "airportWithTheMostTotalFlights":
-				List<Map.Entry<String, AirportReport>> entryList = new ArrayList<Map.Entry<String, AirportReport>>( airlinesReport.geAirportReport().entrySet());
+				final List<Map.Entry<String, AirportReport>> entryList = new ArrayList<Map.Entry<String, AirportReport>>(airlinesReport.geAirportReport().entrySet());
 	            Collections.sort( entryList, new Comparator<Map.Entry<String, AirportReport>>() {
 	                @Override
 		                public int compare(Map.Entry<String, AirportReport> obj1, Map.Entry<String, AirportReport> obj2) {
@@ -248,10 +238,7 @@ public class AirlinesDataService {
 		                }
 		            }
 		        );
-
-				Map.Entry<String,AirportReport> entry = entryList.get(entryList.size() - 1);
-				AirportReport report = entry.getValue();
-				element.setTextContent(String.valueOf(report.getTotalFlights()));
+				element.setTextContent(String.valueOf(entryList.get(entryList.size() - 1).getValue().getTotalFlights()));
 				break;
 		}
 		
@@ -259,6 +246,27 @@ public class AirlinesDataService {
        stat.appendChild(element);
        
        rootElement.appendChild(stat);
+	}
+	
+	/**
+	 * Sort from lowest to highest by number of 
+	 * delays due to security  
+	 * 
+	 * @param airlinesReport
+	 */
+	private void sortAirportsByDelaysDueToSecurity(AirlinesDataSetReport airlinesReport) {
+		final List<Map.Entry<String, AirportReport>> entryList = new ArrayList<Map.Entry<String, AirportReport>>( airlinesReport.geAirportReport().entrySet());
+        Collections.sort( entryList, new Comparator<Map.Entry<String, AirportReport>>() {
+            @Override
+                public int compare(Map.Entry<String, AirportReport> obj1, Map.Entry<String, AirportReport> obj2) {
+                    return obj1.getValue().getNumOfDelaysDueToSecurity().compareTo(obj2.getValue().getNumOfDelaysDueToSecurity());
+                }
+            }
+        );
+
+        assert(entryList == null);
+		airlinesReport.setHighestNumberOfDelaysDueToSecurity(entryList.get(entryList.size() - 1).getValue().getNumOfDelaysDueToSecurity());
+		airlinesReport.setLowestNumberOfDelaysDueToSecurity(entryList.get(0).getValue().getNumOfDelaysDueToSecurity());
 	}
 	
 	

@@ -1,9 +1,9 @@
 package modal;
 
-import java.util.Collection;
 import java.util.HashMap;
 
 /**
+ * Report to generate an XML file
  * 
  * @author Max
  *
@@ -14,6 +14,8 @@ public class AirlinesDataSetReport {
 	private Long totalNumDueToCarrier;
 	private Long totalNumOfFlights;
 	private Long totalNumDueToNas;
+	private Long highestNumberOfDelaysDueToSecurity;
+	private Long lowestNumberOfDelaysDueToSecurity;
 
 	/**
 	 * Initialize data
@@ -24,8 +26,26 @@ public class AirlinesDataSetReport {
 		this.totalNumDueToSecurity = (long)0;
 		this.totalNumDueToCarrier=(long) 0;
 		this.totalNumDueToNas =(long) 0;
+		this.highestNumberOfDelaysDueToSecurity =(long) 0;
+		this.lowestNumberOfDelaysDueToSecurity =(long) 0;
 	}
 	
+	public Long getHighestNumberOfDelaysDueToSecurity() {
+		return highestNumberOfDelaysDueToSecurity;
+	}
+
+	public void setHighestNumberOfDelaysDueToSecurity(Long highestNumberOfDelaysDueToSecurity) {
+		this.highestNumberOfDelaysDueToSecurity = highestNumberOfDelaysDueToSecurity;
+	}
+
+	public Long getLowestNumberOfDelaysDueToSecurity() {
+		return lowestNumberOfDelaysDueToSecurity;
+	}
+
+	public void setLowestNumberOfDelaysDueToSecurity(Long lowestNumberOfDelaysDueToSecurity) {
+		this.lowestNumberOfDelaysDueToSecurity = lowestNumberOfDelaysDueToSecurity;
+	}
+
 	public HashMap<String, AirportReport> geAirportReport() {
 		return airportReport;
 	}
