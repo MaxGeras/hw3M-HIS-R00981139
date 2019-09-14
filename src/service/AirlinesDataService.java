@@ -68,6 +68,8 @@ public class AirlinesDataService {
 			//Read file and get airlines report
 			AirlinesDataSetReport airlinesReport = readUnzippedFile();
 			
+			assert(airlinesReport == null);
+			
 		    // Sort by delays due to security
 		    SortReportData.sortAirportsByDelaysDueToSecurity(airlinesReport);
 		    
