@@ -1,5 +1,5 @@
 # hw3M-HIS-R00981139
-In Java 8, please process this attached dataset and output the calculated data points below in an XML schema you define. Please submit your code and resulting XML for review.
+In Java 8, please process this attached dataset (airlines) and output the calculated data points below in an XML schema you define. Please submit your code and resulting XML for review.
 
 ·         Total number of airports
 
