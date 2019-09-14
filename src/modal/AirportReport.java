@@ -4,13 +4,15 @@ package modal;
  * Report per airport
  * 
  * @author Max
- *
  */
 public class AirportReport {
 	private String airportName;
 	private Long numOfDelaysDueToSecurity;
 	private Long totalFlights;
 	
+	/**
+	 * Initialize data
+	 */
 	public AirportReport() {
 		this.airportName = "";
 		this.numOfDelaysDueToSecurity = (long) 0;

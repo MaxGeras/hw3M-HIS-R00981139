@@ -63,32 +63,57 @@ public class AirlinesDataService {
 	/**
 	 * Read the data from the file and serialize to Airline java object.
 	 */
-	public void processAirlinesData() {
+	public void processAirlinesData() throws Exception{
+		try {
+			//Read file and get airlines report
+			AirlinesDataSetReport airlinesReport = readUnzippedFile();
+			
+		    // Sort by delays due to security
+		    SortReportData.sortAirportsByDelaysDueToSecurity(airlinesReport);
+		    
+		    //Sort by total flights
+		    SortReportData.findAirportWithTheMostTotalFlights(airlinesReport);
+		    
+		    //generate an XML file 
+		    generateXMLschema(airlinesReport);
+		} catch (Exception ex) {
+			 ex.printStackTrace();
+			 throw new Exception();
+		}
+	}
+	
+
+	/**
+	 * Read file and generate report
+	 * 
+	 * @return airlines report
+	 * @throws Exception
+	 */
+	private AirlinesDataSetReport readUnzippedFile() throws Exception {
+		AirlinesDataSetReport airlinesReport = new AirlinesDataSetReport();
 		File file = new File(FILE_PATH);
 		try(JsonReader jsonReader = new JsonReader(new InputStreamReader(new FileInputStream(file), UTF_8))) {
-			AirlinesDataSetReport airlinesReport = new AirlinesDataSetReport();
 			Gson gson = new GsonBuilder().create();
-
 		    jsonReader.beginArray();
+		    
 		    // Read each record at a time
 		    while (jsonReader.hasNext()){
 		        generateAirlinesReport(gson.fromJson(jsonReader, Airline.class), airlinesReport);
 		    }
-		    
-		    // Sort by delays due to security
-		    sortAirportsByDelaysDueToSecurity(airlinesReport);
-		    
-		    //generate an XML file 
-		    generateXMLschema(airlinesReport);
-		}catch (UnsupportedEncodingException ex) {
+		} catch (UnsupportedEncodingException ex) {
 		    ex.printStackTrace();
+		    throw new UnsupportedEncodingException();
 		} catch (FileNotFoundException ex) {
 		    ex.printStackTrace();
+		    throw new FileNotFoundException();
 		} catch (IOException ex) {
 		    ex.printStackTrace();
+		    throw new IOException();
 		} catch (Exception ex) {
 		    ex.printStackTrace();
+		    throw new Exception();
 		}
+		return airlinesReport;
 	}
 	
 	/**
@@ -145,12 +170,12 @@ public class AirlinesDataService {
 					existingReport.setNumOfDelaysDueToSecurity(existingReport.getNumOfDelaysDueToSecurity() + newReport.getNumOfDelaysDueToSecurity());
 					existingReport.setNumOfDelaysDueToSecurity(existingReport.getTotalFlights() + newReport.getTotalFlights());
 					
-					// Updated successfully
+					// Report has been updated successfully
 					assert(airlinesReport.geAirportReport().replace(existingReport.getAirportName(), existingReport) != null);
 				}
 			}
 		} catch (Exception ex) {
-			  ex.printStackTrace();
+			 ex.printStackTrace();
 		}
 	}
 	
@@ -211,33 +236,24 @@ public class AirlinesDataService {
 				break;
 			case "percentageOfTotalFlightsDelayedBySecurity":
 				element.setTextContent(String.valueOf(percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToSecurity(), 
-						airlinesReport.getTotalNumOfFlights()) + "%"));
+						airlinesReport.getTotalNumOfFlights()) + " %"));
 				break;
 			case "percentageOfTotalFlightsDelayedByCarrier":
 				element.setTextContent(String.valueOf(percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToCarrier(), 
-						airlinesReport.getTotalNumOfFlights()) + "%"));
+						airlinesReport.getTotalNumOfFlights()) + " %"));
 				break;
 			case "percentageOfTotalFlightsDelayedByNationalAviationSystem":
 				element.setTextContent(String.valueOf(percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToNas(), 
-						airlinesReport.getTotalNumOfFlights()) + "%"));
+						airlinesReport.getTotalNumOfFlights()) + " %"));
 				break;
 			case "airportWithTheHighestNumberOfDelaysDueToSecurity":
 				element.setTextContent(String.valueOf(airlinesReport.getHighestNumberOfDelaysDueToSecurity()));
 				break;
 			case "airportWithTheLowestNumberOfDelaysDueToSecurity":
-		
 				element.setTextContent(String.valueOf(airlinesReport.getLowestNumberOfDelaysDueToSecurity()));
 				break;
 			case "airportWithTheMostTotalFlights":
-				final List<Map.Entry<String, AirportReport>> entryList = new ArrayList<Map.Entry<String, AirportReport>>(airlinesReport.geAirportReport().entrySet());
-		        Collections.sort( entryList, new Comparator<Map.Entry<String, AirportReport>>() {
-		            @Override
-		                public int compare(Map.Entry<String, AirportReport> obj1, Map.Entry<String, AirportReport> obj2) {
-		                    return obj1.getValue().getTotalFlights().compareTo(obj2.getValue().getTotalFlights());
-		                }
-		            }
-		        );
-				element.setTextContent(String.valueOf(entryList.get(entryList.size() - 1).getValue().getTotalFlights()));
+				element.setTextContent(String.valueOf(airlinesReport.getNumWithTheMostTotalFlights()));
 				break;
 	   }
 		
@@ -246,27 +262,4 @@ public class AirlinesDataService {
 	   
 	   rootElement.appendChild(stat);
 	}
-	
-	/**
-	 * Sort from lowest to highest by number of 
-	 * delays due to security  
-	 * 
-	 * @param airlinesReport
-	 */
-	private void sortAirportsByDelaysDueToSecurity(AirlinesDataSetReport airlinesReport) {
-		final List<Map.Entry<String, AirportReport>> entryList = new ArrayList<Map.Entry<String, AirportReport>>( airlinesReport.geAirportReport().entrySet());
-        Collections.sort( entryList, new Comparator<Map.Entry<String, AirportReport>>() {
-            @Override
-                public int compare(Map.Entry<String, AirportReport> obj1, Map.Entry<String, AirportReport> obj2) {
-                    return obj1.getValue().getNumOfDelaysDueToSecurity().compareTo(obj2.getValue().getNumOfDelaysDueToSecurity());
-                }
-            }
-        );
-
-        assert(entryList == null);
-		airlinesReport.setHighestNumberOfDelaysDueToSecurity(entryList.get(entryList.size() - 1).getValue().getNumOfDelaysDueToSecurity());
-		airlinesReport.setLowestNumberOfDelaysDueToSecurity(entryList.get(0).getValue().getNumOfDelaysDueToSecurity());
-	}
-	
-	
 }

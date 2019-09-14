@@ -9,10 +9,19 @@ import service.AirlinesDataService;
  */
 public class Airlines {
 
+	/**
+	 * Run the application
+	 * @AirlinesDataService implements the creation of the XML report
+	 * @param args
+	 */
 	public static void main(String[] args) {
-		// Generate report
-		AirlinesDataService airlinesDataService = new AirlinesDataService();
-		airlinesDataService.processAirlinesData();
+		try {
+			// Generate an XML report
+			new AirlinesDataService().processAirlinesData();
+		} catch(Exception ex) {
+			 ex.printStackTrace();
+		}
+	
 		System.exit(0);
 	}
 }

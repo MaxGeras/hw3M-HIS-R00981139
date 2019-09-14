@@ -16,6 +16,7 @@ public class AirlinesDataSetReport {
 	private Long totalNumDueToNas;
 	private Long highestNumberOfDelaysDueToSecurity;
 	private Long lowestNumberOfDelaysDueToSecurity;
+	private Long numWithTheMostTotalFlights;
 
 	/**
 	 * Initialize data
@@ -30,6 +31,17 @@ public class AirlinesDataSetReport {
 		this.lowestNumberOfDelaysDueToSecurity =(long) 0;
 	}
 	
+
+	public Long getNumWithTheMostTotalFlights() {
+		return numWithTheMostTotalFlights;
+	}
+
+
+	public void setNumWithTheMostTotalFlights(Long numWithTheMostTotalFlights) {
+		this.numWithTheMostTotalFlights = numWithTheMostTotalFlights;
+	}
+
+
 	public Long getHighestNumberOfDelaysDueToSecurity() {
 		return highestNumberOfDelaysDueToSecurity;
 	}

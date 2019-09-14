@@ -3,9 +3,9 @@ package modal;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Map to the JSON object
  * 
  * @author Max
- *
  */
 public class MinutesDelayed {
 	@SerializedName("late aircraft")

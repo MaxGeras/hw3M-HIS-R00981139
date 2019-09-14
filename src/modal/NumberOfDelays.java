@@ -5,6 +5,8 @@ import java.io.Serializable;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Map to the JSON object
+ * 
  * @author Max
  *
  */
