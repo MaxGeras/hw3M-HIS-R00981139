@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * 
+ * @author Max
+ *
+ */
 public class Statistics implements Serializable {
 	private static final long serialVersionUID = 3L;
 	

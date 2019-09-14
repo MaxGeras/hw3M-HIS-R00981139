@@ -7,13 +7,13 @@
         <totalNumberOfFlights>52445801</totalNumberOfFlights>
     </stats>
     <stats id="3">
-        <percentageOfTotalFlightsDelayedBySecurity>0.046924633680397024</percentageOfTotalFlightsDelayedBySecurity>
+        <percentageOfTotalFlightsDelayedBySecurity>0.046924633680397024%</percentageOfTotalFlightsDelayedBySecurity>
     </stats>
     <stats id="4">
-        <percentageOfTotalFlightsDelayedByCarrier>0.046924633680397024</percentageOfTotalFlightsDelayedByCarrier>
+        <percentageOfTotalFlightsDelayedByCarrier>4.829772740052154%</percentageOfTotalFlightsDelayedByCarrier>
     </stats>
     <stats id="5">
-        <percentageOfTotalFlightsDelayedByNationalAviationSystem>8.023183781672055</percentageOfTotalFlightsDelayedByNationalAviationSystem>
+        <percentageOfTotalFlightsDelayedByNationalAviationSystem>8.023183781672055%</percentageOfTotalFlightsDelayedByNationalAviationSystem>
     </stats>
     <stats id="6">
         <airportWithTheHighestNumberOfDelaysDueToSecurity>12666</airportWithTheHighestNumberOfDelaysDueToSecurity>

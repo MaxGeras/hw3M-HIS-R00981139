@@ -1,5 +1,11 @@
 package modal;
 
+/**
+ * Report per airport
+ * 
+ * @author Max
+ *
+ */
 public class AirportReport {
 	private String airportName;
 	private Long numOfDelaysDueToSecurity;

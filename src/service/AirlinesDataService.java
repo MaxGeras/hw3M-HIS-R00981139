@@ -42,16 +42,16 @@ public class AirlinesDataService {
 	private static String UTF_8 = "UTF-8";
 	private static String FILE_PATH = "C:/Users/Maksym/Downloads/airlines";
 	private static List<String> XML_ELEMENTS = Collections.unmodifiableList(
-			Arrays.asList(
-					"totalNumberOfAirports", 
-					"totalNumberOfFlights",
-					"percentageOfTotalFlightsDelayedBySecurity",
-					"percentageOfTotalFlightsDelayedByCarrier",
-					"percentageOfTotalFlightsDelayedByNationalAviationSystem",
-					"airportWithTheHighestNumberOfDelaysDueToSecurity",
-					"airportWithTheLowestNumberOfDelaysDueToSecurity",
-					"airportWithTheMostTotalFlights"
-			));
+		Arrays.asList(
+			"totalNumberOfAirports", 
+			"totalNumberOfFlights",
+			"percentageOfTotalFlightsDelayedBySecurity",
+			"percentageOfTotalFlightsDelayedByCarrier",
+			"percentageOfTotalFlightsDelayedByNationalAviationSystem",
+			"airportWithTheHighestNumberOfDelaysDueToSecurity",
+			"airportWithTheLowestNumberOfDelaysDueToSecurity",
+			"airportWithTheMostTotalFlights"
+    ));
 	
 	private PercentageCalculator percentageCalculator;
 	
@@ -160,34 +160,33 @@ public class AirlinesDataService {
 	 * @param airlinesReport
 	 */
 	private void generateXMLschema(final AirlinesDataSetReport airlinesReport) {
-		  try {
-		        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-		        Document doc = docBuilder.newDocument();
-		        // airlines root element
-		        Element rootElement = doc.createElement("airlines");
-		        doc.appendChild(rootElement);
-		        
-		        int index = 0;
-		        for (final String xmlElement: XML_ELEMENTS) {
-		        	buildXmlElement(xmlElement, rootElement, airlinesReport, doc, ++index);
-		        }
-		        
-		        // Write the content into XML file
-		        DOMSource source = new DOMSource(doc);
-		        DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyyMMdd");
-		        StreamResult result = new StreamResult(new File("airline_stats_" + timeStampPattern.format(java.time.LocalDateTime.now()) + ".xml"));
-		        
-		        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		        Transformer transformer = transformerFactory.newTransformer();
-		        // Beautify the format of the resulted XML
-		        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-		        transformer.transform(source, result);
-		    } catch(Exception ex) {
-		        ex.printStackTrace();
-		    }
-		
+	  try {
+	        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+	        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+	        Document doc = docBuilder.newDocument();
+	        // airlines root element
+	        Element rootElement = doc.createElement("airlines");
+	        doc.appendChild(rootElement);
+	        
+	        int index = 0;
+	        for (final String xmlElement: XML_ELEMENTS) {
+	        	buildXmlElement(xmlElement, rootElement, airlinesReport, doc, ++index);
+	        }
+	        
+	        // Write the content into XML file
+	        DOMSource source = new DOMSource(doc);
+	        DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyyMMdd");
+	        StreamResult result = new StreamResult(new File("airlines_stats_" + timeStampPattern.format(java.time.LocalDateTime.now()) + ".xml"));
+	        
+	        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+	        Transformer transformer = transformerFactory.newTransformer();
+	        // Beautify the format of the resulted XML
+	        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+	        transformer.transform(source, result);
+	    } catch(Exception ex) {
+	        ex.printStackTrace();
+	    }
 	}
 	
 	/**
@@ -203,7 +202,7 @@ public class AirlinesDataService {
 	   Element stat = doc.createElement("stats");
 	   Element element = doc.createElement(xmlElement);
     
-		switch (xmlElement) {
+	   switch (xmlElement) {
 			case "totalNumberOfAirports":
 				element.setTextContent(String.valueOf(airlinesReport.geAirportReport().size()));
 				break;
@@ -212,27 +211,27 @@ public class AirlinesDataService {
 				break;
 			case "percentageOfTotalFlightsDelayedBySecurity":
 				element.setTextContent(String.valueOf(percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToSecurity(), 
-						airlinesReport.getTotalNumOfFlights())));
+						airlinesReport.getTotalNumOfFlights()) + "%"));
 				break;
 			case "percentageOfTotalFlightsDelayedByCarrier":
 				element.setTextContent(String.valueOf(percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToCarrier(), 
-						airlinesReport.getTotalNumOfFlights())));
+						airlinesReport.getTotalNumOfFlights()) + "%"));
 				break;
 			case "percentageOfTotalFlightsDelayedByNationalAviationSystem":
 				element.setTextContent(String.valueOf(percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToNas(), 
-						airlinesReport.getTotalNumOfFlights())));
+						airlinesReport.getTotalNumOfFlights()) + "%"));
 				break;
 			case "airportWithTheHighestNumberOfDelaysDueToSecurity":
 				element.setTextContent(String.valueOf(airlinesReport.getHighestNumberOfDelaysDueToSecurity()));
 				break;
 			case "airportWithTheLowestNumberOfDelaysDueToSecurity":
-
+		
 				element.setTextContent(String.valueOf(airlinesReport.getLowestNumberOfDelaysDueToSecurity()));
 				break;
 			case "airportWithTheMostTotalFlights":
 				final List<Map.Entry<String, AirportReport>> entryList = new ArrayList<Map.Entry<String, AirportReport>>(airlinesReport.geAirportReport().entrySet());
-	            Collections.sort( entryList, new Comparator<Map.Entry<String, AirportReport>>() {
-	                @Override
+		        Collections.sort( entryList, new Comparator<Map.Entry<String, AirportReport>>() {
+		            @Override
 		                public int compare(Map.Entry<String, AirportReport> obj1, Map.Entry<String, AirportReport> obj2) {
 		                    return obj1.getValue().getTotalFlights().compareTo(obj2.getValue().getTotalFlights());
 		                }
@@ -240,12 +239,12 @@ public class AirlinesDataService {
 		        );
 				element.setTextContent(String.valueOf(entryList.get(entryList.size() - 1).getValue().getTotalFlights()));
 				break;
-		}
+	   }
 		
-       stat.setAttribute("id", String.valueOf(index));
-       stat.appendChild(element);
-       
-       rootElement.appendChild(stat);
+	   stat.setAttribute("id", String.valueOf(index));
+	   stat.appendChild(element);
+	   
+	   rootElement.appendChild(stat);
 	}
 	
 	/**

@@ -12,7 +12,7 @@ public class PercentageCalculator {
 	 * 
 	 * @param obtained
 	 * @param total
-	 * @return
+	 * @return calculated percent
 	 */
 	  public double calculatePercentage(final double obtained,final double total) {
 	        return obtained * 100 / total;

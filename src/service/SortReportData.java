@@ -4,9 +4,20 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+/**
+ * 
+ * @author Max
+ *
+ */
 public class SortReportData {
  
-	// Let's sort HashMap by Value
+	/**
+	 * 
+	 * @param <K>
+	 * @param <V>
+	 * @param report
+	 * @return
+	 */
 	public static <K, V extends Comparable<? super V>> Map<K, V> reportSortByValue(Map<K, V> report) {
  
 		Map<K, V> reportResult = new LinkedHashMap<>();

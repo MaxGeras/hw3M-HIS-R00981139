@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * 
+ * @author Max
+ *
+ */
 public class Flights implements Serializable{
 	private static final long serialVersionUID = 4L;
 	
