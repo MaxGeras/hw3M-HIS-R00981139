@@ -54,8 +54,8 @@ public class SortReportData {
         // We should have data
         assert(entryList == null);
         
-		airlinesReport.setHighestNumberOfDelaysDueToSecurity(entryList.get(entryList.size() - 1).getValue().getNumOfDelaysDueToSecurity());
-		airlinesReport.setLowestNumberOfDelaysDueToSecurity(entryList.get(0).getValue().getNumOfDelaysDueToSecurity());
+		airlinesReport.setAirportWithHighestNumberOfDelaysDueToSecurity(entryList.get(entryList.size() - 1).getValue().getAirportName());
+		airlinesReport.setAirportWithLowestNumberOfDelaysDueToSecurity(entryList.get(0).getValue().getAirportName());
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class SortReportData {
                 }
             }
         );
-        airlinesReport.setNumWithTheMostTotalFlights(entryList.get(entryList.size() - 1).getValue().getTotalFlights());
+        airlinesReport.setAirportWithTheMostTotalFlights(entryList.get(entryList.size() - 1).getValue().getAirportName());
 	}
 
 }

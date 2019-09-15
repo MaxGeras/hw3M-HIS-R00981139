@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <airlines>
     <stats id="1">
-        <totalNumberOfAirports>29</totalNumberOfAirports>
+        <totalNumberOfAirports>9</totalNumberOfAirports>
     </stats>
     <stats id="2">
-        <totalNumberOfFlights>52445801</totalNumberOfFlights>
+        <totalNumberOfFlights>711</totalNumberOfFlights>
     </stats>
     <stats id="3">
-        <percentageOfTotalFlightsDelayedBySecurity>0.046924633680397024 %</percentageOfTotalFlightsDelayedBySecurity>
+        <percentageOfTotalFlightsDelayedBySecurity>14.064697609001406 %</percentageOfTotalFlightsDelayedBySecurity>
     </stats>
     <stats id="4">
-        <percentageOfTotalFlightsDelayedByCarrier>4.829772740052154 %</percentageOfTotalFlightsDelayedByCarrier>
+        <percentageOfTotalFlightsDelayedByCarrier>3.7974683544303796 %</percentageOfTotalFlightsDelayedByCarrier>
     </stats>
     <stats id="5">
-        <percentageOfTotalFlightsDelayedByNationalAviationSystem>8.023183781672055 %</percentageOfTotalFlightsDelayedByNationalAviationSystem>
+        <percentageOfTotalFlightsDelayedByNationalAviationSystem>3.5161744022503516 %</percentageOfTotalFlightsDelayedByNationalAviationSystem>
     </stats>
     <stats id="6">
-        <airportWithTheHighestNumberOfDelaysDueToSecurity>12666</airportWithTheHighestNumberOfDelaysDueToSecurity>
+        <airportWithTheHighestNumberOfDelaysDueToSecurity>Seattle, WA: Seattle/Tacoma International</airportWithTheHighestNumberOfDelaysDueToSecurity>
     </stats>
     <stats id="7">
-        <airportWithTheLowestNumberOfDelaysDueToSecurity>381</airportWithTheLowestNumberOfDelaysDueToSecurity>
+        <airportWithTheLowestNumberOfDelaysDueToSecurity>Dallas/Fort Worth, TX: Dallas/Fort Worth International</airportWithTheLowestNumberOfDelaysDueToSecurity>
     </stats>
     <stats id="8">
-        <airportWithTheMostTotalFlights>12276</airportWithTheMostTotalFlights>
+        <airportWithTheMostTotalFlights>Houston, TX: George Bush Intercontinental/Houston</airportWithTheMostTotalFlights>
     </stats>
 </airlines>

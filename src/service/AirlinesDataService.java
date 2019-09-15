@@ -7,12 +7,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -40,7 +37,7 @@ import modal.AirportReport;
  */
 public class AirlinesDataService {
 	private static String UTF_8 = "UTF-8";
-	private static String FILE_PATH = "C:/Users/Maksym/Downloads/airlines";
+	private static String FILE_PATH = "C:/Users/Maksym/Downloads/airlines2.txt";
 	private static List<String> XML_ELEMENTS = Collections.unmodifiableList(
 		Arrays.asList(
 			"totalNumberOfAirports", 
@@ -249,13 +246,13 @@ public class AirlinesDataService {
 						airlinesReport.getTotalNumOfFlights()) + " %"));
 				break;
 			case "airportWithTheHighestNumberOfDelaysDueToSecurity":
-				element.setTextContent(String.valueOf(airlinesReport.getHighestNumberOfDelaysDueToSecurity()));
+				element.setTextContent(airlinesReport.getAirportWithHighestNumberOfDelaysDueToSecurity());
 				break;
 			case "airportWithTheLowestNumberOfDelaysDueToSecurity":
-				element.setTextContent(String.valueOf(airlinesReport.getLowestNumberOfDelaysDueToSecurity()));
+				element.setTextContent(airlinesReport.getAirportWithLowestNumberOfDelaysDueToSecurity());
 				break;
 			case "airportWithTheMostTotalFlights":
-				element.setTextContent(String.valueOf(airlinesReport.getNumWithTheMostTotalFlights()));
+				element.setTextContent(airlinesReport.getAirportWithTheMostTotalFlights());
 				break;
 	   }
 		
