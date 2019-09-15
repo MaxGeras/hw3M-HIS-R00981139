@@ -234,16 +234,16 @@ public class AirlinesDataService {
 				element.setTextContent(String.valueOf(airlinesReport.getTotalNumOfFlights()));
 				break;
 			case "percentageOfTotalFlightsDelayedBySecurity":
-				element.setTextContent(String.valueOf(percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToSecurity(), 
-						airlinesReport.getTotalNumOfFlights()) + " %"));
+				element.setTextContent(String.format("%.3f",percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToSecurity(), 
+						airlinesReport.getTotalNumOfFlights())) + " %");
 				break;
 			case "percentageOfTotalFlightsDelayedByCarrier":
-				element.setTextContent(String.valueOf(percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToCarrier(), 
-						airlinesReport.getTotalNumOfFlights()) + " %"));
+				element.setTextContent(String.format("%.3f",percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToCarrier(), 
+						airlinesReport.getTotalNumOfFlights())) + " %");
 				break;
 			case "percentageOfTotalFlightsDelayedByNationalAviationSystem":
-				element.setTextContent(String.valueOf(percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToNas(), 
-						airlinesReport.getTotalNumOfFlights()) + " %"));
+				element.setTextContent(String.format("%.3f", percentageCalculator.calculatePercentage(airlinesReport.getTotalNumDueToNas(), 
+						airlinesReport.getTotalNumOfFlights())) + " %");
 				break;
 			case "airportWithTheHighestNumberOfDelaysDueToSecurity":
 				element.setTextContent(airlinesReport.getAirportWithHighestNumberOfDelaysDueToSecurity());
