@@ -37,7 +37,7 @@ import modal.AirportReport;
  */
 public class AirlinesDataService {
 	private static String UTF_8 = "UTF-8";
-	private static String FILE_PATH = "C:/Users/Maksym/Downloads/airlines2.txt";
+	private static String FILE_PATH = "C:/Users/Maksym/Downloads/airlines";
 	private static List<String> XML_ELEMENTS = Collections.unmodifiableList(
 		Arrays.asList(
 			"totalNumberOfAirports", 

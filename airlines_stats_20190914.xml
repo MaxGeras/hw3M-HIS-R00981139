@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <airlines>
     <stats id="1">
-        <totalNumberOfAirports>9</totalNumberOfAirports>
+        <totalNumberOfAirports>29</totalNumberOfAirports>
     </stats>
     <stats id="2">
-        <totalNumberOfFlights>711</totalNumberOfFlights>
+        <totalNumberOfFlights>52445801</totalNumberOfFlights>
     </stats>
     <stats id="3">
-        <percentageOfTotalFlightsDelayedBySecurity>14.064697609001406 %</percentageOfTotalFlightsDelayedBySecurity>
+        <percentageOfTotalFlightsDelayedBySecurity>0.046924633680397024 %</percentageOfTotalFlightsDelayedBySecurity>
     </stats>
     <stats id="4">
-        <percentageOfTotalFlightsDelayedByCarrier>3.7974683544303796 %</percentageOfTotalFlightsDelayedByCarrier>
+        <percentageOfTotalFlightsDelayedByCarrier>4.829772740052154 %</percentageOfTotalFlightsDelayedByCarrier>
     </stats>
     <stats id="5">
-        <percentageOfTotalFlightsDelayedByNationalAviationSystem>3.5161744022503516 %</percentageOfTotalFlightsDelayedByNationalAviationSystem>
+        <percentageOfTotalFlightsDelayedByNationalAviationSystem>8.023183781672055 %</percentageOfTotalFlightsDelayedByNationalAviationSystem>
     </stats>
     <stats id="6">
-        <airportWithTheHighestNumberOfDelaysDueToSecurity>Seattle, WA: Seattle/Tacoma International</airportWithTheHighestNumberOfDelaysDueToSecurity>
+        <airportWithTheHighestNumberOfDelaysDueToSecurity>Dallas/Fort Worth, TX: Dallas/Fort Worth International</airportWithTheHighestNumberOfDelaysDueToSecurity>
     </stats>
     <stats id="7">
-        <airportWithTheLowestNumberOfDelaysDueToSecurity>Dallas/Fort Worth, TX: Dallas/Fort Worth International</airportWithTheLowestNumberOfDelaysDueToSecurity>
+        <airportWithTheLowestNumberOfDelaysDueToSecurity>Charlotte, NC: Charlotte Douglas International</airportWithTheLowestNumberOfDelaysDueToSecurity>
     </stats>
     <stats id="8">
-        <airportWithTheMostTotalFlights>Houston, TX: George Bush Intercontinental/Houston</airportWithTheMostTotalFlights>
+        <airportWithTheMostTotalFlights>Dallas/Fort Worth, TX: Dallas/Fort Worth International</airportWithTheMostTotalFlights>
     </stats>
 </airlines>
