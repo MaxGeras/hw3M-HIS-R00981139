@@ -16,12 +16,12 @@
         <percentageOfTotalFlightsDelayedByNationalAviationSystem>8.023 %</percentageOfTotalFlightsDelayedByNationalAviationSystem>
     </stats>
     <stats id="6">
-        <airportWithTheHighestNumberOfDelaysDueToSecurity>Dallas/Fort Worth, TX: Dallas/Fort Worth International</airportWithTheHighestNumberOfDelaysDueToSecurity>
+        <airportWithTheHighestNumberOfDelaysDueToSecurity>Los Angeles, CA: Los Angeles International</airportWithTheHighestNumberOfDelaysDueToSecurity>
     </stats>
     <stats id="7">
-        <airportWithTheLowestNumberOfDelaysDueToSecurity>Charlotte, NC: Charlotte Douglas International</airportWithTheLowestNumberOfDelaysDueToSecurity>
+        <airportWithTheLowestNumberOfDelaysDueToSecurity>New York, NY: LaGuardia</airportWithTheLowestNumberOfDelaysDueToSecurity>
     </stats>
     <stats id="8">
-        <airportWithTheMostTotalFlights>Dallas/Fort Worth, TX: Dallas/Fort Worth International</airportWithTheMostTotalFlights>
+        <airportWithTheMostTotalFlights>Atlanta, GA: Hartsfield-Jackson Atlanta International</airportWithTheMostTotalFlights>
     </stats>
 </airlines>

@@ -167,7 +167,7 @@ public class AirlinesDataService {
 				} else {
 					AirportReport existingReport = airlinesReport.geAirportReport().get(newReport.getAirportName());
 					existingReport.setNumOfDelaysDueToSecurity(existingReport.getNumOfDelaysDueToSecurity() + newReport.getNumOfDelaysDueToSecurity());
-					existingReport.setNumOfDelaysDueToSecurity(existingReport.getTotalFlights() + newReport.getTotalFlights());
+					existingReport.setTotalFlights(existingReport.getTotalFlights() + newReport.getTotalFlights());
 					
 					// Report has been updated successfully
 					assert(airlinesReport.geAirportReport().replace(existingReport.getAirportName(), existingReport) != null);
